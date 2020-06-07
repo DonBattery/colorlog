@@ -42,6 +42,7 @@ func (c *ColorLogger) Debug(msg interface{}) {
 	if !c.debug {
 		return
 	}
+
 	out := color.New(color.FgHiCyan, color.Bold).Sprint("DEBUG ", c.getDate())
 	fmt.Fprintf(c.Output, "[%s] %s: %v\n", out, c.conponent, msg)
 }
