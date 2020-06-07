@@ -1,0 +1,42 @@
+format_version: "8"
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: other
+trigger_map:
+- push_branch: '*'
+  workflow: ci
+- pull_request_source_branch: '*'
+  workflow: ci
+workflows:
+  _go_test:
+    steps:
+    - script@1.1.6:
+        title: Run Go tests
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+            # fail if any commands fails
+            set -e
+            # debug log
+            set -x
+
+            go test ./...
+  _golangci_lint:
+    steps:
+    - script@1.1.6:
+        title: Install and run GolangCI Lint
+        inputs:
+        - content: |-
+            #!/usr/bin/env bash
+
+            set -ex
+
+            go mod vendor
+
+            # It is better to stick to a fixed release, check them at https://github.com/golangci/golangci-lint/releases
+            curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.27.0
+            golangci-lint --modules-download-mode readonly -v run ./...
+  ci:
+    description: Run checks, lints and tests
+    after_run:
+    - _golangci_lint
+    - _go_test

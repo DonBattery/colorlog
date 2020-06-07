@@ -38,12 +38,13 @@ func (c *ColorLogger) getDate() string {
 
 // Debug [DEBUG 17:47:02] Conponent: Debug message
 // Does nothing if debug is false
-func (c *ColorLogger) Debug(msg string) {
+func (c *ColorLogger) Debug(msg interface{}) {
 	if !c.debug {
 		return
 	}
+
 	out := color.New(color.FgHiCyan, color.Bold).Sprint("DEBUG ", c.getDate())
-	fmt.Fprintf(c.Output, "[%s] %s: %s\n", out, c.conponent, msg)
+	fmt.Fprintf(c.Output, "[%s] %s: %v\n", out, c.conponent, msg)
 }
 
 // Debugf formatted Debug message
@@ -52,9 +53,9 @@ func (c *ColorLogger) Debugf(format string, a ...interface{}) {
 }
 
 // Info [INFO 17:47:02] Conponent: Info message
-func (c *ColorLogger) Info(msg string) {
+func (c *ColorLogger) Info(msg interface{}) {
 	out := color.New(color.FgHiBlue, color.Bold).Sprint("INFO  ", c.getDate())
-	fmt.Fprintf(c.Output, "[%s] %s: %s\n", out, c.conponent, msg)
+	fmt.Fprintf(c.Output, "[%s] %s: %v\n", out, c.conponent, msg)
 }
 
 // Infof formatted Info message
@@ -63,9 +64,9 @@ func (c *ColorLogger) Infof(format string, a ...interface{}) {
 }
 
 // Warn [WARN 17:47:02] Conponent: Warning message
-func (c *ColorLogger) Warn(msg string) {
+func (c *ColorLogger) Warn(msg interface{}) {
 	out := color.New(color.FgHiYellow, color.Bold).Sprint("WARN  ", c.getDate())
-	fmt.Fprintf(c.Output, "[%s] %s: %s\n", out, c.conponent, msg)
+	fmt.Fprintf(c.Output, "[%s] %s: %v\n", out, c.conponent, msg)
 }
 
 // Warnf formatted Warn message
@@ -74,9 +75,9 @@ func (c *ColorLogger) Warnf(format string, a ...interface{}) {
 }
 
 // Error [ERROR 17:47:02] Cononent: Error message
-func (c *ColorLogger) Error(msg string) {
+func (c *ColorLogger) Error(msg interface{}) {
 	out := color.New(color.FgHiRed, color.Bold).Sprint("ERROR ", c.getDate())
-	fmt.Fprintf(c.Output, "[%s] %s: %s\n", out, c.conponent, msg)
+	fmt.Fprintf(c.Output, "[%s] %s: %v\n", out, c.conponent, msg)
 }
 
 // Errorf formatted Error message
@@ -86,9 +87,9 @@ func (c *ColorLogger) Errorf(format string, a ...interface{}) {
 
 // Fatal [FATAL 17:18:02] Conponent: Fatal error message
 // exits the program with status code 1
-func (c *ColorLogger) Fatal(msg string) {
+func (c *ColorLogger) Fatal(msg interface{}) {
 	out := color.New(color.FgHiYellow, color.BgRed, color.Bold).Sprint("FATAL ", c.getDate())
-	fmt.Fprintf(c.Output, "[%s] %s: %s\n", out, c.conponent, msg)
+	fmt.Fprintf(c.Output, "[%s] %s: %v\n", out, c.conponent, msg)
 	os.Exit(1)
 }
 
