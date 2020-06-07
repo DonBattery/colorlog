@@ -34,6 +34,8 @@ workflows:
 
             ls
 
+            go list -mod=readonly -e -json -compiled=true -test=true -export=true -deps=true -find=false -- ./...
+
             # It is better to stick to a fixed release, check them at https://github.com/golangci/golangci-lint/releases
             curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.27.0
             golangci-lint --modules-download-mode readonly -v run ./...
